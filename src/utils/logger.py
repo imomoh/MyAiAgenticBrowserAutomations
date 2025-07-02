@@ -12,14 +12,14 @@ def setup_logger():
     
     if settings.logging.log_format.lower() == "json":
         log_format = (
-            "{"
+            '{{'
             '"timestamp": "{time:YYYY-MM-DD HH:mm:ss.SSS}", '
             '"level": "{level}", '
             '"module": "{module}", '
             '"function": "{function}", '
             '"line": {line}, '
             '"message": "{message}"'
-            "}"
+            '}}'
         )
     else:
         log_format = (

@@ -1,5 +1,6 @@
 from typing import Optional
-from pydantic import BaseSettings, Field
+from pydantic_settings import BaseSettings
+from pydantic import Field
 from pathlib import Path
 
 
@@ -12,9 +13,7 @@ class AgentSettings(BaseSettings):
     max_retries: int = Field(3, env="MAX_RETRIES")
     timeout_seconds: int = Field(30, env="TIMEOUT_SECONDS")
 
-    class Config:
-        env_file = ".env"
-        env_file_encoding = "utf-8"
+    model_config = {"env_file": ".env", "env_file_encoding": "utf-8", "extra": "ignore"}
 
 
 class BrowserSettings(BaseSettings):
@@ -26,9 +25,7 @@ class BrowserSettings(BaseSettings):
     allowed_domains: str = Field("*", env="ALLOWED_DOMAINS")
     blocked_domains: str = Field("", env="BLOCKED_DOMAINS")
 
-    class Config:
-        env_file = ".env"
-        env_file_encoding = "utf-8"
+    model_config = {"env_file": ".env", "env_file_encoding": "utf-8", "extra": "ignore"}
 
 
 class LoggingSettings(BaseSettings):
@@ -36,9 +33,7 @@ class LoggingSettings(BaseSettings):
     log_file: str = Field("logs/agent.log", env="LOG_FILE")
     log_format: str = Field("json", env="LOG_FORMAT")
 
-    class Config:
-        env_file = ".env"
-        env_file_encoding = "utf-8"
+    model_config = {"env_file": ".env", "env_file_encoding": "utf-8", "extra": "ignore"}
 
 
 class Settings:
