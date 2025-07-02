@@ -11,7 +11,7 @@ def setup_logger():
     log_path.parent.mkdir(exist_ok=True)
     
     if settings.logging.log_format.lower() == "json":
-        log_format = (
+        file_log_format = (
             '{{'
             '"timestamp": "{time:YYYY-MM-DD HH:mm:ss.SSS}", '
             '"level": "{level}", '
@@ -22,23 +22,29 @@ def setup_logger():
             '}}'
         )
     else:
-        log_format = (
+        file_log_format = (
             "<green>{time:YYYY-MM-DD HH:mm:ss.SSS}</green> | "
             "<level>{level: <8}</level> | "
             "<cyan>{name}</cyan>:<cyan>{function}</cyan>:<cyan>{line}</cyan> - "
             "<level>{message}</level>"
         )
     
+    console_log_format = (
+        "<level>{level: <8}</level> | "
+        "<level>{message}</level>"
+    )
+    
     logger.add(
         sys.stdout,
-        format=log_format,
+        format=console_log_format,
         level=settings.logging.log_level,
-        colorize=True if settings.logging.log_format.lower() != "json" else False,
+        colorize=True,
+        filter=lambda record: record["level"].no >= logger.level("INFO").no,
     )
     
     logger.add(
         log_path,
-        format=log_format,
+        format=file_log_format,
         level=settings.logging.log_level,
         rotation="10 MB",
         retention="7 days",

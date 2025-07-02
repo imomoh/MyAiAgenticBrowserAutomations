@@ -137,13 +137,12 @@ class TestBrowserAgent:
         assert "Navigation failed" in result.error
 
     def test_get_by_method(self, browser_agent):
-        from selenium.webdriver.common.by import By
-        
-        assert browser_agent._get_by_method("css") == By.CSS_SELECTOR
-        assert browser_agent._get_by_method("xpath") == By.XPATH
-        assert browser_agent._get_by_method("id") == By.ID
-        assert browser_agent._get_by_method("name") == By.NAME
-        assert browser_agent._get_by_method("invalid") == By.CSS_SELECTOR  # default
+        # Playwright uses string selectors directly
+        assert browser_agent._get_by_method("css") == "css"
+        assert browser_agent._get_by_method("xpath") == "xpath"
+        assert browser_agent._get_by_method("id") == "id"
+        assert browser_agent._get_by_method("name") == "name"
+        assert browser_agent._get_by_method("invalid") == "invalid"
 
     def test_store_action_history(self, browser_agent):
         task = "Test task"

@@ -24,6 +24,9 @@ class BrowserSettings(BaseSettings):
     user_data_dir: str = Field("./chrome_data", env="USER_DATA_DIR")
     allowed_domains: str = Field("*", env="ALLOWED_DOMAINS")
     blocked_domains: str = Field("", env="BLOCKED_DOMAINS")
+    use_existing_profile: bool = Field(False, env="USE_EXISTING_PROFILE")
+    profile_path: Optional[str] = Field(None, env="PROFILE_PATH")
+    remote_debugging_port: int = Field(9222, env="REMOTE_DEBUGGING_PORT")
 
     model_config = {"env_file": ".env", "env_file_encoding": "utf-8", "extra": "ignore"}
 
